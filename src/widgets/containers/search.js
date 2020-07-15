@@ -1,26 +1,28 @@
-import React, { Component } from 'react';
-import Search from '../components/search';
-import { connect } from 'react-redux';
-import  * as actions from '../../actions/index';
-import { bindActionCreators } from 'redux';
+import React, { Component } from 'react'
+import Search from '../components/search'
+import { connect } from 'react-redux'
+import * as actions from '../../actions/index'
+import { bindActionCreators } from 'redux'
 
 class SearchContainer extends Component {
   state = {
-    value: 'Luis Fonsi'
+    value: '',
+    prompt: false,
   }
-  handleSubmit = event => {
-    event.preventDefault();
+  handleSubmit = (event) => {
+    event.preventDefault()
     // console.log(this.input.value, 'submit')
     // fetch(`http://miapi.com/buscar/${this.input.value}`).then((data)=>{
     // })
     this.props.actions.searchAsyncEntities(this.input.value)
   }
-  setInputRef = element => {
-    this.input = element;
+  setInputRef = (element) => {
+    this.input = element
   }
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     this.setState({
-      value: event.target.value.replace(' ', '-')
+      value: event.target.value.replace(' ', '-'),
+      prompt: !!event.target.value.length,
     })
   }
   render() {
@@ -30,6 +32,7 @@ class SearchContainer extends Component {
         handleSubmit={this.handleSubmit}
         handleChange={this.handleInputChange}
         value={this.state.value}
+        prompt={this.state.prompt}
       />
     )
   }
@@ -37,8 +40,8 @@ class SearchContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators(actions, dispatch),
   }
 }
 
-export default connect(null, mapDispatchToProps)(SearchContainer);
+export default connect(null, mapDispatchToProps)(SearchContainer)
